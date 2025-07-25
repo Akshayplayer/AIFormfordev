@@ -1,0 +1,45 @@
+.button-notification {
+  padding: 12px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.success-notification {
+  @extend .button-notification;
+  background-color: #28a745; // Green
+}
+
+.error-notification {
+  @extend .button-notification;
+  background-color: #dc3545; // Red
+}
+
+.warning-notification {
+  @extend .button-notification;
+  background-color: #ffc107; // Yellow
+  color: #212529;
+}
+
+.info-notification {
+  @extend .button-notification;
+  background-color: #17a2b8; // Teal
+}
+
+.success-notification::before {
+  content: '✔';
+}
+.error-notification::before {
+  content: '✖';
+}
+.warning-notification::before {
+  content: '⚠️';
+}
+.info-notification::before {
+  content: 'ℹ️';
+}

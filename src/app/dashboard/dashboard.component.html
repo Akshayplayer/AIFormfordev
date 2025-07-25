@@ -1,0 +1,69 @@
+<div class="dashboard-container">
+  <h2>📊 Resource Analytics Dashboard</h2>
+
+  <div class="summary-cards">
+    <div class="card total">Total Employees: {{ totalEmployees }}</div>
+    <div class="card billable">Billable: {{ totalBillable }}</div>
+    <div class="card non-billable">Non-Billable: {{ totalNonBillable }}</div>
+  </div>
+
+  <div class="charts">
+    <!-- Pie Chart for Billable vs Non-Billable -->
+    <kendo-chart [title]="{ text: 'Billable vs Non-Billable' }">
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          type="pie"
+          [data]="[
+            { category: 'Billable', value: totalBillable },
+            { category: 'Non-Billable', value: totalNonBillable }
+          ]"
+          field="value"
+          categoryField="category"
+        >
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+
+    <!-- Column Chart for Skill Distribution -->
+    <kendo-chart [title]="{ text: 'Technology Skill Distribution' }">
+      <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item [categories]="techSkillCategories">
+        </kendo-chart-category-axis-item>
+      </kendo-chart-category-axis>
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          [data]="techSkillValues"
+          type="column"
+          [name]="'Employees'"
+        >
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+
+    <!-- Optional: Project Distribution (if implemented in .ts) -->
+    <kendo-chart *ngIf="projectCategories.length" [title]="{ text: 'Project Allocation Distribution' }">
+      <kendo-chart-category-axis>
+        <kendo-chart-category-axis-item [categories]="projectCategories">
+        </kendo-chart-category-axis-item>
+      </kendo-chart-category-axis>
+      <kendo-chart-series>
+        <kendo-chart-series-item
+          [data]="projectValues"
+          type="bar"
+          [name]="'Allocations'"
+        >
+        </kendo-chart-series-item>
+      </kendo-chart-series>
+    </kendo-chart>
+  </div>
+
+  <!-- Location List -->
+  <div class="card location-card">
+    <h4>Top Locations</h4>
+    <ul>
+      <li *ngFor="let loc of topLocations">
+        {{ loc.location }} - {{ loc.count }} Employees
+      </li>
+    </ul>
+  </div>
+</div>

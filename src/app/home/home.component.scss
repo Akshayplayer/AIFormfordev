@@ -1,0 +1,229 @@
+.custom-kendo-grid {
+  
+  background-color: #121212;
+  color: #eee;
+  border-radius: 10px;
+  padding: 10px;
+  font-family: sans-serif;
+}
+
+/* Grid Header */
+// .custom-kendo-grid .k-grid-header {
+//   background-color: #1e1e1e;
+//   color: #08d;
+//   font-weight: 600;
+//   border-radius: 10px;
+//   border-bottom: 2px solid #08d;
+// }
+
+/* Grid Header Cells */
+// .custom-kendo-grid .k-header {
+//   background-color: transparent;
+//   color: #08d;
+//   text-transform: uppercase;
+//   font-size: 14px;
+// }
+
+/* Grid Rows */
+.custom-kendo-grid .k-grid-content tr {
+  background-color: #222;
+  border-radius: 10px;
+  transition: background-color 0.3s ease;
+}
+
+.custom-kendo-grid .k-grid-content tr:hover {
+  background-color: #333;
+  border-radius: 10px;
+}
+
+/* Grid Cells */
+.custom-kendo-grid .k-grid-content td {
+  color: #eee;
+  border-color: #333;
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.custom-kendo-grid .k-grid-content tr.k-alt {
+  background-color: #1c1c1c;
+}
+
+.custom-kendo-grid .k-grid-pager {
+  background-color: #1e1e1e;
+  color: #eee;
+  border-top: 2px solid #08d;
+}
+
+.custom-kendo-grid .k-i-sort-asc-sm,
+.custom-kendo-grid .k-i-sort-desc-sm,
+.custom-kendo-grid .k-grid-filter {
+  color: #08d;
+}
+
+.custom-kendo-grid .k-state-selected {
+  background-color: #08d !important;
+  color: black !important;
+}
+
+.btn-warning {
+  background-color: #f5f5f5;
+  border: 1px solid rgba(0,0,0,0.08);
+  height:30px;
+  color: #3d3d3d;
+  font-weight: 100;
+  border-radius: 0.25rem;
+  padding: 4px 8px;
+  margin-top: 0px;
+  transition: background-color 0.3s ease;
+}
+
+
+.btn-warning:hover {
+  background-color: rgba(0, 0, 0, 0.08);
+}
+
+.btn-warning:focus{
+  border: 2px solid rgba(0, 0, 0, 0.08)
+}
+
+.custom-kendo-grid .btn-primary,
+.custom-kendo-grid .btn-success,
+.custom-kendo-grid .btn-danger {
+  border-radius: 6px;
+  padding: 4px 10px;
+  font-size: 14px;
+  color: #fff;
+}
+
+.custom-kendo-grid .btn-primary {
+  background-color: #007bff;
+}
+
+.custom-kendo-grid .btn-success {
+  background-color: #28a745;
+}
+
+.custom-kendo-grid .btn-danger {
+  background-color: #dc3545;
+}
+
+.custom-kendo-grid .btn {
+  margin-right: 5px;
+}
+
+.search-bar input.form-control {
+  border-radius: 8px;
+  padding: 8px 12px;
+  border: 1px solid #08d;
+  width: 300px;
+  color: black;
+  
+}
+
+
+.page-template {
+  font-family: "DejaVu Sans", "Arial", sans-serif;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.page-template .header {
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  right: 30px;
+  border-bottom: 1px solid #888;
+  color: #888;
+  border-radius: 10px;
+}
+
+.page-template .footer {
+  position: absolute;
+  bottom: 30px;
+  left: 30px;
+  right: 30px;
+  border-top: 1px solid #888;
+  text-align: center;
+  color: #888;
+}
+
+
+.k-grid {
+  font-family: "DejaVu Sans", "Arial", sans-serif;
+}
+
+// Dialog container
+::ng-deep .k-dialog {
+  background-color: #111827; // dark background
+  color: #f9fafb;
+  border-radius: 14px;
+  padding: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+// Dialog title
+::ng-deep .k-dialog-titlebar {
+  font-size: 18px;
+  font-weight: bold;
+  color: black;
+  border-bottom: 1px solid #374151;
+}
+
+// Dialog icon and message layout
+.custom-dialog-content {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.dialog-icon .warning-icon {
+  font-size: 48px;
+  color: #f87171; // red
+}
+
+.dialog-message p {
+  margin: 0;
+  font-size: 15px;
+  color: #e5e7eb;
+}
+
+// Dialog action buttons
+.dialog-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 24px;
+  gap: 12px;
+}
+
+.confirm-btn {
+  background-color: transparent;
+  color: #f87171;
+  border: 1px solid #f87171;
+  padding: 6px 18px;
+  border-radius: 6px;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #f87171;
+    color: #fff;
+  }
+}
+
+.cancel-btn {
+  background-color: #e5e7eb;
+  color: #111827;
+  padding: 6px 18px;
+  border: none;
+  border-radius: 6px;
+  font-weight: 500;
+
+  &:hover {
+    background-color: #d1d5db;
+  }
+}
+
+

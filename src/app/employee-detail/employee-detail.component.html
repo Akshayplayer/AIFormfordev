@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <div class="employee-details-container">
+    <div #pdfContent>
+      <h2 class="title">Employee Details</h2>
+
+      <div class="details-field">
+        <span class="field-label">Employee ID:</span>
+        <span>{{ empdetails.empId }}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Name:</span>
+        <span>{{ empdetails.resourceName}}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Designation:</span>
+        <span>{{ empdetails.designationName}}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Reporting To:</span>
+        <span>{{ empdetails.reportingTo}}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Billable:</span>
+        <span>{{ empdetails.isBillableFlags }}</span>
+      </div>
+
+
+      <div class="details-field">
+        <span class="field-label">Tech Skill:</span>
+        <span>{{ empdetails.skillNames }}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Project Allocation:</span>
+        <span>{{ empdetails.projectIdNames}}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Location:</span>
+        <span>{{ empdetails.locationName}}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Email ID:</span>
+        <span>{{ empdetails.emailId}}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">CTE DOJ:</span>
+        <span>{{ empdetails.cteDoj}}</span>
+      </div>
+
+      <div class="details-field">
+        <span class="field-label">Remarks:</span>
+        <span>{{ empdetails.remarks}}</span>
+      </div>
+    </div>
+    <div class="form-group">
+      <button (click)="goBack()" class="back-button">← Back to Home</button>
+      <button (click)="Update(empdetails.empId)" class="back-button"> ○ Update data</button>
+      <button (click)="downloadPDF()" class="back-button">↑ Download PDF</button>
+    </div>
+  </div>
+
+</body>
+
+</html>

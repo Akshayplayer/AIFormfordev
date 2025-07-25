@@ -1,0 +1,89 @@
+<div class="home-container">
+
+  <kendo-grid [kendoGridBinding]="details" [pageable]="true" [pageSize]="10" [filterable]="true" [height]="500"
+    [selectable]="{ mode: 'multiple', drag: true, multipleRanges: true }" (selectionChange)="onSelectionChange($event)"
+    kendoGridSelectBy="empId" [sortable]="true" class="custom-kendo-grid" #grid>
+
+    <kendo-toolbar overflow="scroll">
+      <!-- Core Grid Tools -->
+      <kendo-toolbar-button kendoGridFilterTool></kendo-toolbar-button>
+      <kendo-toolbar-button kendoGridSortTool></kendo-toolbar-button>
+      <kendo-toolbar-button kendoGridGroupTool></kendo-toolbar-button>
+      <kendo-toolbar-separator></kendo-toolbar-separator>
+      <kendo-toolbar-button kendoGridColumnChooserTool></kendo-toolbar-button>
+
+      <kendo-toolbar-spacer></kendo-toolbar-spacer>
+      <!-- Export & Import Actions -->
+      <kendo-toolbar-button kendoGridExcelTool></kendo-toolbar-button>
+      <kendo-toolbar-button (click)="exportToCSV()" [text]="'Export All Data'"></kendo-toolbar-button>
+      <kendo-toolbar-button (click)="getData()" [text]="'↻ Refresh Grid'"></kendo-toolbar-button>
+
+      <kendo-toolbar-separator></kendo-toolbar-separator>
+
+      <!-- Delete Action -->
+      <kendo-toolbar-button (click)="DeleteSelected()" [text]="'Delete Selected'"></kendo-toolbar-button>
+    </kendo-toolbar>
+
+
+    <kendo-grid-checkbox-column [width]="40" [showSelectAll]="true"></kendo-grid-checkbox-column>
+
+    <kendo-grid-column title="S.No." [width]="100">
+      <ng-template kendoGridCellTemplate let-rowIndex="rowIndex">
+        {{ rowIndex + 1 }}
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-column field="empId" title="EMPLOYEE ID" filter="numeric" [width]="150"></kendo-grid-column>
+    <kendo-grid-column field="resourceName" title="NAME" [width]="150" editor="text"></kendo-grid-column>
+    <kendo-grid-column field="designation" title="DESIGNATION" [width]="150" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="reportingTo" title="REPORTING TO" [width]="150"></kendo-grid-column>
+
+    <!-- <kendo-grid-column field="isBillable" title="BILLABLE" [width]="150" filter="boolean" [hidden]="true">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        {{ dataItem.isBillable ? 'Yes' : 'No' }}
+      </ng-template>
+    </kendo-grid-column> -->
+
+    <kendo-grid-column field="technologySkillNames" title="Tech Skills" [width]="150"></kendo-grid-column>
+    <kendo-grid-column field="projectAllocationNames" title="Projects" [width]="150"></kendo-grid-column>
+    <kendo-grid-column field="isBillable" title="BILLABLE" [width]="150"></kendo-grid-column>
+    <kendo-grid-column field="location" title="LOCATION" [width]="150" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="emailId" title="EMAIL ID" [width]="150"></kendo-grid-column>
+    <kendo-grid-column field="cteDoj" title="CTE DOJ" filter="date" [width]="150" [hidden]="true"></kendo-grid-column>
+    <kendo-grid-column field="remarks" title="REMARKS" [width]="150" [hidden]="true"></kendo-grid-column>
+
+    <kendo-grid-column title="ACTIONS" [width]="300">
+      <ng-template kendoGridCellTemplate let-dataItem>
+        <button (click)="View(dataItem.empId)" class="btn btn-sm btn-primary me-2">View</button>
+        <button (click)="Edit(dataItem.empId)" class="btn btn-sm btn-success me-2">Edit</button>
+        <button kendoButton (click)="Delete(dataItem.empId)" class="btn btn-sm btn-danger">Delete</button>
+      </ng-template>
+    </kendo-grid-column>
+
+    <kendo-grid-excel fileName="Resources.xlsx" [fetchData]="allData.bind(this)"></kendo-grid-excel>
+  </kendo-grid>
+
+  <!-- Delete Confirmation Dialog -->
+  <kendo-dialog *ngIf="showDeleteDialog" (close)="onDialogClose()" title="⚠️ Confirm Deletion">
+    <div class="custom-dialog-content">
+      <div class="dialog-icon">
+        <!-- <span class="material-icons warning-icon">delete_forever</span> -->
+      </div>
+      <div class="dialog-message">
+        <p *ngIf="selectedItems.length === 1">
+          Are you sure you want to delete <strong>{{ selectedItems[0].resourceName }}</strong>?
+        </p>
+        <p *ngIf="selectedItems.length > 1">
+          Are you sure you want to delete <strong>{{ selectedItems.length }}</strong> selected items?
+        </p>
+      </div>
+    </div>
+
+    <kendo-dialog-actions class="dialog-actions">
+      <button kendoButton (click)="confirmDelete()" class="confirm-btn">Yes, Delete</button>
+      <button kendoButton (click)="onDialogClose()" class="cancel-btn">Cancel</button>
+    </kendo-dialog-actions>
+  </kendo-dialog>
+
+
+</div>

@@ -1,0 +1,95 @@
+/* Global Navbar Custom Styles */
+.navbar {
+  background-color: black !important;
+  border-bottom: 2px solid white;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+a {
+  text-decoration: none; /* removes underline */
+  color: inherit;         /* uses parent element’s color */
+}
+
+.navbar-brand, .navbar-nav .nav-link, h4 {
+  color: #eee !important;
+  font-family: sans-serif;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.navbar-brand:hover,
+.navbar-nav .nav-link:hover {
+  color:white !important;
+}
+
+h4 {
+  margin: 10px;
+  font-size: 24px;
+}
+
+.navbar-toggler {
+  border: 1px solid white;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba%280,140,255, 1%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.navbar-nav .nav-link.active {
+  color: white !important;
+  font-weight: bold;
+}
+
+.container-fluid {
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+/* Optional: Smooth link hover transition */
+.navbar-nav .nav-link {
+  transition: color 0.3s ease;
+}
+
+/* Mobile Collapse Menu Background (when expanded) */
+.navbar-collapse {
+  background-color: black;
+  padding: 10px;
+}
+
+.back-button1 {
+   background-color: rgba(255, 255, 255, 0.374);
+  color: white;
+  border: 2px solid white;
+  padding: 0px 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: block;
+  // margin: 20px auto 0;
+  transition: background-color 0.3s ease;
+
+}
+
+.back-button2 {
+  background-color: rgba(255, 255, 255, 0.374);
+  color: white;
+  border: 2px solid white;
+  padding: 0px 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  display: block;
+  // margin: 20px auto 0;
+  transition: background-color 0.3s ease;
+}
+
+.space{
+  display: flex;
+  //  flex: 1;
+  // align-items: center;
+  // justify-content: center;
+  // flex-wrap: wrap;
+  gap: 20px;
+  // margin: 2px 0px;
+  // margin-bottom:35px;
+}

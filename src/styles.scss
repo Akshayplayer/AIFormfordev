@@ -1,1 +1,106 @@
-/* You can add global styles to this file, and also import other style files */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.placeholder {
+    background-color: inherit !important;
+    opacity: 1;
+}
+
+.custom-ng-select {
+  width: auto;
+  font-size: 0.95rem;
+
+  .ng-select-container {
+    height: 30px; // Allow height to grow as needed initially
+    overflow-x: scroll;
+    overflow-x:visible;
+    overflow-y:hidden;
+    display:flex;
+    flex-wrap: nowrap; 
+    // border-radius: 10px;
+    // border: 1px solid #ccc;
+    // background-color: #fff;
+    // padding: 4px 8px;
+    transition: border-color 0.3s ease;
+
+    &.ng-select-focused {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 2px rgba(13, 110, 253, 0.2);
+    }
+
+    // Selected tags wrapper
+    .ng-value-container {
+      display: flex;
+      flex-wrap: wrap;
+      max-height: 100px;          // 👈 Limit height
+      overflow-y: auto;           // 👈 Enable scroll when needed
+      padding-right: 4px;
+
+      &::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #ccc;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  // Style individual tags
+  .ng-value {
+    background-color: #e0e0e0;
+    color: #333;
+    padding: 4px 8px;
+    border-radius: 8px;
+    margin: 2px 4px 2px 0;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+
+    .ng-value-icon {
+      color: #333;
+      font-weight: bold;
+      margin-left: 6px;
+      cursor: pointer;
+    }
+  }
+
+  .ng-placeholder {
+    color: #6c757d;
+    font-style: italic;
+  }
+
+  .ng-dropdown-panel {
+    background-color: #fff;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    margin-top: 4px;
+    z-index: 1000;
+
+    .ng-option {
+      padding: 10px 12px;
+      font-size: 0.95rem;
+      cursor: pointer;
+
+      &.ng-option-selected {
+        background-color: #e6f0ff;
+        color: #0d6efd;
+        font-weight: 600;
+      }
+
+      &.ng-option-marked {
+        background-color: #f1f1f1;
+      }
+
+      &:hover {
+        background-color: #f0f8ff;
+      }
+    }
+  }
+}
+

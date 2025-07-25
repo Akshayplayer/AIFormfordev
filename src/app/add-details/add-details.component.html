@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+
+</head>
+
+<body>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
+    crossorigin="anonymous"></script>
+
+  <div class="form">
+
+
+    <div class="title">Welcome</div>
+
+    <div class="subtitle">ADD YOUR PROJECT DETAILS</div>
+
+    <!-- <div *ngIf="onsubmit" class="loading-spinner">
+      <div class="spinner-border text-primary" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div> -->
+    <!-- File upload for Excel/CSV import -->
+    <div class="form-group mb-4">
+      <div class="bulk-import">
+        <label for="bulkUpload" class="form-label">📁 Bulk Import from Excel or CSV</label>
+        <input type="file" id="bulkUpload" (change)="onFileChange($event)" accept=".csv,.xlsx,.xls"
+          class="form-control" />
+      </div>
+    </div>
+    <button (click)="exportTemplate()" class="btn btn-secondary">Download Template</button>
+
+
+    <form [formGroup]="myForm" (ngSubmit)="OnSubmit()" id="Myform" autocomplete="off">
+      <div class="form-info-message text-muted mb-3" *ngIf="!empId">
+        Your form data is saved automatically and will be restored if you revisit this page.
+      </div>
+      <div class="form-group">
+
+        <div class="input-container ic1">
+          <input id="NAME" class="input" formControlName="resourceName" type="text" placeholder="" />
+          <div class="cut cut1"></div>
+          <label for="NAME" class="placeholder">NAME
+            <span class="warn">*</span>
+          </label>
+          <br>
+          <div class="text-danger small mt-1"
+            *ngIf="myForm.get('resourceName')?.touched && myForm.get('resourceName')?.invalid">
+            <span *ngIf="myForm.get('resourceName')?.errors?.['required']">Name is required.</span>
+          </div>
+        </div>
+
+
+        <div class="input-container ic1">
+          <select formControlName="designationId" class="input" id="DESIGNATION" placeholder="">
+            <option *ngFor="let d of designations" [value]="d.id">{{ d.name }}</option>
+          </select> <!-- <label for="DESIGNATION">Designation</label> -->
+
+          <div class="cut cut2"></div>
+          <label for="DESIGNATION" class="placeholder">DESIGNATION <span class="warn">*</span></label>
+          <div class="text-danger small mt-1"
+            *ngIf="myForm.get('designationId')?.touched && myForm.get('designationId')?.invalid">
+            <span *ngIf="myForm.get('designationId')?.errors?.['required']">Designation is required.</span>
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="form-group">
+        <div class="input-container ic1">
+          <select formControlName="reportingToId" class="input" id="REPORTING_TO">
+            <option *ngFor="let d of reportingManagers" [value]="d.id">{{ d.name }}</option>
+          </select>
+          <div class="cut cut3"></div>
+          <label for="REPORTING_TO" class="placeholder">REPORTING TO <span class="warn">*</span></label>
+          <div class="text-danger small mt-1"
+            *ngIf="myForm.get('reportingToId')?.touched && myForm.get('reportingToId')?.invalid">
+            <span *ngIf="myForm.get('reportingToId')?.errors?.['required']">Reporting_To is required.</span>
+          </div>
+        </div>
+
+
+
+        <!-- <div class="input-container ic1">
+          <select id="BILLABLE" class="input" formControlName="isBillable" placeholder="">
+            <option class="A" disabled value="">-- Select Billable Status --</option>
+            <option class="A" value="true">Yes</option>
+            <option class="A" value="false">No</option>
+          </select>
+          <div class="cut cut4"></div>
+          <label for="BILLABLE" class="placeholder">BILLABLE <span class="warn">*</span></label>
+          <br>
+          <div class="text-danger small mt-1"
+            *ngIf="myForm.get('isBillable')?.touched && myForm.get('isBillable')?.invalid">
+            <span *ngIf="myForm.get('isBillable')?.errors?.['required']">Billable is required.</span>
+          </div>
+        </div> -->
+      </div>
+
+
+
+
+      <div class="form-group">
+        <div class="input-container ic1">
+          <ng-select class="input custom-ng-select" formControlName="technologySkill" [items]="skills" bindLabel="name"
+            bindValue="id" [multiple]="true" placeholder="" [closeOnSelect]="true" [searchable]="true"
+            [selectOnTab]="true" [clearable]="true">
+          </ng-select>
+
+          <div class="cut cut5"></div>
+          <label for="TECH_SKILLS" class="placeholder">TECH_SKILLS <span class="warn">*</span></label>
+          <div class="text-danger small mt-1"
+            *ngIf="myForm.get('technologySkill')?.touched && myForm.get('technologySkill')?.invalid">
+            <span *ngIf="myForm.get('technologySkill')?.errors?.['required']">Tech_Skill is required.</span>
+          </div>
+        </div>
+
+
+
+        <div class="input-container ic1">
+
+          <ng-select class="input custom-ng-select" [items]="projects" bindLabel="name" bindValue="id" [multiple]="true"
+            formControlName="projectAllocation" placeholder="" [closeOnSelect]="false" [searchable]="true"
+            [selectOnTab]="true" [clearable]="true">
+
+            <!-- Custom tag template -->
+            <ng-template ng-label-tmp let-item="item">
+              {{ item.name }} ({{ item.isBillable ? 'Billable' : 'Non-Billable' }})
+            </ng-template>
+
+            <!-- Dropdown options template -->
+            <ng-template ng-option-tmp let-item="item">
+              {{ item.name }} ({{ item.isBillable ? 'Billable' : 'Non-Billable' }})
+            </ng-template>
+          </ng-select>
+
+
+          <div class="cut cut6"></div>
+          <label for="PROJECT_ALLOCATION" class="placeholder">PROJECT_ALLOCATION <span class="warn">*</span></label>
+          <div class="text-danger small mt-1"
+            *ngIf="myForm.get('projectAllocation')?.touched && myForm.get('projectAllocation')?.invalid">
+            <span *ngIf="myForm.get('projectAllocation')?.errors?.['required']">Project_Allocation is required.</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+        <div class="input-container ic1">
+          <select id="LOCATION" class="input" formControlName="locationId" placeholder="">
+            <option *ngFor="let loc of locations" [value]="loc.id">{{ loc.name }}</option>
+          </select>
+          <div class="cut cut7"></div>
+          <label for="LOCATION" class="placeholder">LOCATION <span class="warn">*</span></label>
+          <div class="text-danger small mt-1"
+            *ngIf="myForm.get('locationId')?.touched && myForm.get('locationId')?.invalid">
+            <span *ngIf="myForm.get('locationId')?.errors?.['required']">Location is required.</span>
+          </div>
+        </div>
+
+
+
+        <div class="input-container ic1">
+          <input id="EMAIL_ID" class="input" type="text" formControlName="emailId" placeholder="" />
+          <div class="cut cut8"></div>
+          <label for="EMAIL_ID" class="placeholder">EMAIL_ID <span class="warn">*</span></label>
+          <br>
+          <div class="text-danger small mt-1" *ngIf="myForm.get('emailId')?.touched && myForm.get('emailId')?.invalid">
+            <span *ngIf="myForm.get('emailId')?.errors?.['required']">Email is required.</span>
+            <span *ngIf="myForm.get('emailId')?.errors?.['email']">Invalid email format.</span>
+          </div>
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+        <div class="input-container ic1">
+          <input id="CTE_DOJ" class="input" type="date" formControlName="cteDoj" placeholder="" />
+          <div class="cut cut9"></div>
+          <label for="CTE_DOJ" class="placeholder">CTE_DOJ <span class="warn">*</span></label>
+          <br>
+          <div class="text-danger small mt-1" *ngIf="myForm.get('cteDoj')?.touched && myForm.get('cteDoj')?.invalid">
+            <span *ngIf="myForm.get('cteDoj')?.errors?.['required']">CTE_DOJ is required.</span>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="input-container ic1">
+          <textarea style="height: 100px;" id="REMARKS" class="input" type="text" formControlName="remarks"
+            placeholder=""></textarea>
+          <div class="cut cut10"></div>
+          <label for="REMARKS" class="placeholder">REMARKS</label>
+        </div>
+      </div>
+      <!-- <div class="input-container ic2">
+      <input id="lastname" class="input" type="text" placeholder=" " />
+      <div class="cut"></div>
+      <label for="lastname" class="placeholder">Last name</label>
+    </div>
+    <div class="input-container ic2">
+      <input id="email" class="input" type="text" placeholder=" " />
+      <div class="cut cut-short"></div>
+      <label for="email" class="placeholder">Email</label>
+    </div> -->
+      <div class="form-group">
+        <button type="submit" class="submit">Submit</button>
+        <button type="button" class="submit" (click)="resetForm()">Reset</button>
+      </div>
+      <!-- <button type="submit" class="btn btn-primary w-100">Submit</button> -->
+    </form>
+  </div>
+</body>
+
+</html>
