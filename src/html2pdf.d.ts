@@ -1,1 +1,1 @@
-declare module 'html2pdf.js'; //udhiuhsdiaud
+declare module 'html2pdf.js'; //udhiuhsdiauddfdf
