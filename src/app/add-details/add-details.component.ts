@@ -148,7 +148,7 @@ export class AddDetailsComponent {
               .map(v => v.trim())
               .map(name => getId(name, list))
               .filter(id => id !== null);
-            
+            ///
           
           const obj: Resource = {
             ResourceName: String(normalized['resourcename'] ?? ''),
@@ -176,16 +176,19 @@ export class AddDetailsComponent {
         // this.myForm.patchValue(this.importedRecords[0]);
 
         // Send to backend for bulk insert
+        console.log('Bulk import data', this.importedRecords);
         this.myService.BulkInsertEmployees(this.importedRecords)
           .subscribe({
-            next: () => {
+            next: (response: any) => {
+              console.log('Response for bulk import', response);
               this.notifier.showMessage(
                 `Imported ${this.importedRecords.length} employee(s)`
               );
               localStorage.removeItem(this.localStorageKey);
               this.router.navigate(['/Home']);
             },
-            error: () => {
+            error: (error: any) => {
+              console.error('Bulk import error', error);
               this.notifier.showMessage('Import failed');
             }
           });
