@@ -148,7 +148,7 @@ export class AddDetailsComponent {
               .map(v => v.trim())
               .map(name => getId(name, list))
               .filter(id => id !== null);
-            ///
+            
           
           const obj: Resource = {
             ResourceName: String(normalized['resourcename'] ?? ''),
