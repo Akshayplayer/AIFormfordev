@@ -9,20 +9,21 @@
 
   <div class="charts">
     <!-- Pie Chart for Billable vs Non-Billable -->
-    <kendo-chart [title]="{ text: 'Billable vs Non-Billable' }">
-      <kendo-chart-series>
-        <kendo-chart-series-item
-          type="pie"
-          [data]="[
-            { category: 'Billable', value: totalBillable },
-            { category: 'Non-Billable', value: totalNonBillable }
-          ]"
-          field="value"
-          categoryField="category"
-        >
-        </kendo-chart-series-item>
-      </kendo-chart-series>
-    </kendo-chart>
+    <!-- Pie Chart for Billable vs Non-Billable Projects -->
+<kendo-chart [title]="{ text: 'Billable vs Non-Billable Projects' }">
+  <kendo-chart-series>
+    <kendo-chart-series-item
+      type="pie"
+      [data]="[
+        { category: 'Billable', value: projectBillableCount },
+        { category: 'Non-Billable', value: projectNonBillableCount }
+      ]"
+      field="value"
+      categoryField="category"
+    >
+    </kendo-chart-series-item>
+  </kendo-chart-series>
+</kendo-chart>
 
     <!-- Column Chart for Skill Distribution -->
     <kendo-chart [title]="{ text: 'Technology Skill Distribution' }">

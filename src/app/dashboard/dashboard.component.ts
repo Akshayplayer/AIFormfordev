@@ -20,8 +20,12 @@ export class DashboardComponent {
   totalEmployees = 0;
   totalBillable = 0;
   totalNonBillable = 0;
+  projectBillableCount = 0;
+  projectNonBillableCount = 0;
 
   techSkillDistribution: { [key: string]: number } = {};
+  projectDistribution: { [projectName: string]: number } = {};
+  topLocations: { location: string; count: number }[] = [];
 
   constructor(private serverService: ServerService) { }
 
@@ -32,25 +36,13 @@ export class DashboardComponent {
       this.calculateProjectStats();
     });
   }
-  projectDistribution: { [projectName: string]: number } = {};
-
-  calculateProjectStats(): void {
-    this.projectDistribution = {};
-
-    for (const emp of this.employeeData) {
-      const projects: { name: string, isBillable: boolean }[] = emp.projectIdNames ?? [];
-      for (const proj of projects) {
-        const label = `${proj.name} (${proj.isBillable ? 'Billable' : 'Non-Billable'})`;
-        this.projectDistribution[label] = (this.projectDistribution[label] || 0) + 1;
-      }
-    }
-  }
 
   calculateStats(): void {
     this.totalEmployees = this.employeeData.length;
     this.totalBillable = this.employeeData.filter(e => e.isBillable).length;
     this.totalNonBillable = this.totalEmployees - this.totalBillable;
 
+    // Use skillNames (array of strings) for distribution
     this.techSkillDistribution = {};
     for (const emp of this.employeeData) {
       const skills: string[] = emp.skillNames ?? ['Unknown'];
@@ -60,9 +52,31 @@ export class DashboardComponent {
     }
 
     this.calculateTopLocations();
-    this.calculateProjectStats(); // Optional
+    this.calculateProjectStats();
   }
 
+  calculateProjectStats(): void {
+    this.projectDistribution = {};
+    this.projectBillableCount = 0;
+    this.projectNonBillableCount = 0;
+
+    for (const emp of this.employeeData) {
+      const projects: { name: string, isBillable: boolean }[] = emp.projectIdNames ?? [];
+      for (const proj of projects) {
+        const label = `${proj.name} (${proj.isBillable ? 'Billable' : 'Non-Billable'})`;
+        this.projectDistribution[label] = (this.projectDistribution[label] || 0) + 1;
+
+        // Count billable/non-billable projects
+        if (proj.isBillable) {
+          this.projectBillableCount++;
+        } else {
+          this.projectNonBillableCount++;
+        }
+      }
+    }
+    this.projectCategories = Object.keys(this.projectDistribution);
+    this.projectValues = Object.values(this.projectDistribution);
+  }
 
   get techSkillCategories(): string[] {
     return Object.keys(this.techSkillDistribution);
@@ -72,24 +86,18 @@ export class DashboardComponent {
     return Object.values(this.techSkillDistribution);
   }
 
-  topLocations: { location: string; count: number }[] = [];
-
   private calculateTopLocations(): void {
     const locationMap: { [key: string]: number } = {};
-
     for (const emp of this.employeeData) {
-      const loc = emp.location || 'Unknown';
+      // Use locationName for display
+      const loc = emp.locationName || 'Unknown';
       locationMap[loc] = (locationMap[loc] || 0) + 1;
     }
-
     this.topLocations = Object.entries(locationMap)
       .map(([location, count]) => ({ location, count }))
       .sort((a, b) => b.count - a.count)
       .slice(0, 5); // top 5
   }
-
-
-
 
 
 }
