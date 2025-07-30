@@ -36,6 +36,11 @@ export class ServerService {
     return this.myhttpclient.get(endpoint);
   }
 
+  GetEmployeeByIdWithIds(empId:number){
+    const endpoint = this.baseUrl + "/get-by-id-with-ids/" + empId;
+    return this.myhttpclient.get(endpoint);
+  }
+
   UpdateEmployee(empId: number, data: any) {
     const endpoint = this.baseUrl + "/Putdata/" + empId;
     return this.myhttpclient.put(endpoint, data);
@@ -77,4 +82,6 @@ export class ServerService {
   GetManagers(): Observable<any[]> {
     return this.myhttpclient.get<any[]>(this.baseUrl + '/GetManagers');
   }
+
+
 }

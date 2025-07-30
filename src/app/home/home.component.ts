@@ -11,12 +11,14 @@ import { DialogComponent } from "@progress/kendo-angular-dialog";
 import { DialogModule } from '@progress/kendo-angular-dialog';
 import { CommonModule } from '@angular/common';
 import { ResourceGet } from '../ResourcesGet';
+import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgSelectModule } from '@ng-select/ng-select';
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [KENDO_GRID, KENDO_GRID_PDF_EXPORT, KENDO_TOOLBAR, DialogComponent, DialogModule, CommonModule],
+  imports: [KENDO_GRID, KENDO_GRID_PDF_EXPORT, KENDO_TOOLBAR, DialogComponent, DialogModule, CommonModule, ReactiveFormsModule, FormsModule, NgSelectModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -37,9 +39,27 @@ export class HomeComponent {
   selectedKeys: number[] = [];
   selectedItems: any[] = [];
   showDeleteDialog = false;
+  showBulkEditDialog = false;
 
+  bulkEditForm = new FormGroup({
+    locationId: new FormControl(''),
+    designationId: new FormControl(''),
+    reportingToId: new FormControl(''),
+    technologySkill: new FormControl([]),
+    projectAllocation: new FormControl([])
+  });
+  locations: any[] = [];
+  designations: any[] = [];
+  reportingManagers: any[] = [];
+  skills: any[] = [];
+  projects: any[] = [];
   ngOnInit() {
     this.getData();
+    this.Myservices.GetLocations().subscribe(data => this.locations = data);
+    this.Myservices.GetDesignations().subscribe(data => this.designations = data);
+    this.Myservices.GetManagers().subscribe(data => this.reportingManagers = data);
+    this.Myservices.GetSkills().subscribe(data => this.skills = data);
+    this.Myservices.GetProjects().subscribe(data => this.projects = data);
 
     this.sharedService.gridRefresh$.subscribe(() => {
       this.notifier.showMessage("Data imported. Grid refreshed.");
@@ -47,24 +67,79 @@ export class HomeComponent {
     });
   }
 
-  
+  openBulkEditDialog() {
+    if (this.selectedKeys.length === 0) {
+      this.notifier.showMessage("No items selected for bulk edit");
+      return;
+    }
+    this.bulkEditForm.reset({
+      locationId: '',
+      designationId: '',
+      reportingToId: '',
+      technologySkill: [],
+      projectAllocation: []
+    });
+    this.showBulkEditDialog = true;
+  }
+
+  closeBulkEditDialog() {
+    this.showBulkEditDialog = false;
+  }
+
+  applyBulkEdit() {
+    if (this.bulkEditForm.invalid) return;
+    const values = this.bulkEditForm.value;
+    const updates: any = {};
+    if (values.locationId) updates.LocationId = values.locationId;
+    if (values.designationId) updates.DesignationId = values.designationId;
+    if (values.reportingToId) updates.ReportingId = values.reportingToId;
+    if (values.technologySkill && values.technologySkill.length) updates.SkillIds = values.technologySkill;
+    if (values.projectAllocation && values.projectAllocation.length) updates.ProjectIds = values.projectAllocation;
+
+    if (Object.keys(updates).length === 0) {
+      this.notifier.showMessage("No changes selected");
+      return;
+    }
+    console.log(updates);
+    console.log({
+      EmployeeIds: this.selectedKeys,
+      Updates: updates
+    });
+
+    // Use the new bulkUpdate API
+    this.Myservices.bulkUpdate({
+      EmployeeIds: this.selectedKeys,
+      Updates: updates
+    }).subscribe({
+      next: () => {
+        this.notifier.showMessage("Bulk update successful");
+        this.showBulkEditDialog = false;
+        this.getData();
+      },
+      error: () => {
+        this.notifier.showMessage("Bulk update failed");
+      }
+    });
+  }
+
+
   getData() {
-  this.Myservices.GetAllEmployees().subscribe((data: any) => {
-    this.details = data.map((emp: any) => ({
-      empId: emp.empId,
-      resourceName: emp.resourceName,
-      designation: emp.designationName,
-      reportingTo: emp.reportingTo,      
-      technologySkillNames: emp.skillNames?.join(', ') ?? '',  // Assuming skillNames is a string[]
-      projectAllocationNames: emp.projectIdNames?.join(', ') ?? '',
-      isBillable: emp.isBillableFlags ?.join(', ') ?? '',
-      location: emp.locationName,
-      emailId: emp.emailId,
-      cteDoj: emp.cteDoj,
-      remarks: emp.remarks
-    }));
-  });
-}
+    this.Myservices.GetAllEmployees().subscribe((data: any) => {
+      this.details = data.map((emp: any) => ({
+        empId: emp.empId,
+        resourceName: emp.resourceName,
+        designation: emp.designationName,
+        reportingTo: emp.reportingTo,
+        technologySkillNames: emp.skillNames?.join(', ') ?? '',  // Assuming skillNames is a string[]
+        projectAllocationNames: emp.projectIdNames?.join(', ') ?? '',
+        isBillable: emp.isBillableFlags?.join(', ') ?? '',
+        location: emp.locationName,
+        emailId: emp.emailId,
+        cteDoj: emp.cteDoj,
+        remarks: emp.remarks
+      }));
+    });
+  }
 
 
   View(empId: number) {
@@ -168,6 +243,6 @@ export class HomeComponent {
     };
   }
 
-  
+
 
 }

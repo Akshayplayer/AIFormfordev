@@ -1,4 +1,4 @@
 export const environment = {
-  production: false,
-  baseApiUrl: 'https://backendpoc-f5eugxbhcrd9akfu.canadacentral-01.azurewebsites.net/api/Controllerwebapp'
+  production: true,
+  baseApiUrl: 'https://localhost:7111/api/Controllerwebapp'
 };

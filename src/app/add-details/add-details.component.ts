@@ -93,7 +93,10 @@ export class AddDetailsComponent {
 
     // Load data for edit mode
     if (this.empId) {
-      this.myService.GetEmployee(this.empId).subscribe(data => this.myForm.patchValue(data));
+      this.myService.GetEmployeeByIdWithIds(this.empId).subscribe(data => {
+        console.log("Employee Data", data);
+        this.myForm.patchValue(data);
+      });
     } else {
       const saved = localStorage.getItem(this.localStorageKey);
       if (saved) { this.myForm.patchValue(JSON.parse(saved)); }
