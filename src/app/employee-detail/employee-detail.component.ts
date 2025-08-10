@@ -20,10 +20,14 @@ export class EmployeeDetailComponent {
   empId!: number;
   empdetails:any;
   ngOnInit(){
-    this.empId = +this.route.snapshot.paramMap.get('empId')!;
-    this.Myservice.GetEmployee(this.empId).subscribe((data:any)=>{
-      this.empdetails=data;
-    })
+    this.Myservice.selectedEmployeeId$.subscribe(empId => {
+    if (empId) {
+      this.empId = empId;
+      this.Myservice.GetEmployee(this.empId).subscribe((data:any)=>{
+        this.empdetails=data;
+      })
+    }
+  });
   }
   goBack(): void {
     this.notifier.showMessage("Back to Home")

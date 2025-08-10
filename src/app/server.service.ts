@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../src/environments/environment';
 import { Observable, Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -10,15 +11,32 @@ export class ServerService {
   getReportingManagers() {
     throw new Error('Method not implemented.');
   }
-  private gridRefresh = new Subject<void>();
+  private gridRefresh = new BehaviorSubject<string>("Initial data state");
   gridRefresh$ = this.gridRefresh.asObservable();
+
+  private selectedEmployeeId = new BehaviorSubject<number | null>(null);
+  selectedEmployeeId$ = this.selectedEmployeeId.asObservable();
+
+  setSelectedEmployeeId(id: number | null) {
+    this.selectedEmployeeId.next(id);
+  }
 
   private baseUrl = environment.baseApiUrl;
 
   constructor(private myhttpclient: HttpClient) { }
 
+  /*************  ✨ Windsurf Command 🌟  *************/
+  /**
+   * Notifies the grid that the data has changed and that it should
+   * refresh the data.
+   */
   notifyGridRefresh() {
-    this.gridRefresh.next();
+    /**
+     * Emit a value on the gridRefresh$ observable to notify the
+     * grid that the data has changed.
+     */
+    
+    this.gridRefresh.next("Data has changed, please refresh the grid.");
   }
 
   GetAllEmployees() {
@@ -36,7 +54,7 @@ export class ServerService {
     return this.myhttpclient.get(endpoint);
   }
 
-  GetEmployeeByIdWithIds(empId:number){
+  GetEmployeeByIdWithIds(empId: number) {
     const endpoint = this.baseUrl + "/get-by-id-with-ids/" + empId;
     return this.myhttpclient.get(endpoint);
   }

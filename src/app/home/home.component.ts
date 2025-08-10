@@ -53,8 +53,21 @@ export class HomeComponent {
   reportingManagers: any[] = [];
   skills: any[] = [];
   projects: any[] = [];
+
   ngOnInit() {
     this.getData();
+    this.getMasters();
+
+    this.sharedService.gridRefresh$.subscribe(() => {
+      this.notifier.showMessage("Data imported. Grid refreshed.");
+      this.getData();
+    });
+  }
+
+  /**
+   * Fetch masters data for Locations, Designations, Reporting Managers, Skills, and Projects.
+   */
+  private getMasters() {
     this.Myservices.GetLocations().subscribe(data => this.locations = data);
     this.Myservices.GetDesignations().subscribe(data => this.designations = data);
     this.Myservices.GetManagers().subscribe(data => this.reportingManagers = data);
@@ -66,6 +79,7 @@ export class HomeComponent {
       this.getData();
     });
   }
+/*******  728fa583-5fe2-4dd0-a927-651c9d2159eb  *******/
 
   openBulkEditDialog() {
     if (this.selectedKeys.length === 0) {
@@ -143,6 +157,7 @@ export class HomeComponent {
 
 
   View(empId: number) {
+    this.sharedService.setSelectedEmployeeId(empId);
     this.notifier.showMessage("View Data Successfully");
     this.router.navigate([`/Employee/${empId}`]);
   }

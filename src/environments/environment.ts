@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
+  production: false,
   baseApiUrl: 'https://localhost:7111/api/Controllerwebapp'
 };

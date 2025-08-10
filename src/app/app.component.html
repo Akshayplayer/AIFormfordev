@@ -25,19 +25,34 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <div class="space">
-                        <li class="nav-item">
-                            <button class="back-button1" routerLink="/dashboard"><a class="nav-link active"
-                                    aria-current="page">HOME</a></button>
+                        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+                            <button class="back-button1" (click)="showSignupModal = true">
+                                <a class="nav-link active" aria-current="page">Sign Up</a>
+                            </button>
                         </li>
-                   
-                        <li class="nav-item">
-                            <button class="back-button2" routerLink="/Add"><a class="nav-link active"
-                                    aria-current="page">ADD RESOURCE</a>
+                        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
+                            <button class="back-button1" (click)="showLoginModal = true">
+                                <a class="nav-link active" aria-current="page">LOGIN</a>
                             </button>
                         </li>
                         <li class="nav-item">
+                            <button *ngIf="authService.isLoggedIn()" class="back-button1" routerLink="/dashboard"><a
+                                    class="nav-link active" aria-current="page">HOME</a></button>
+                        </li>
+
+                        <li class="nav-item">
+                            <button *ngIf="authService.isLoggedIn()" class="back-button2" routerLink="/Add"><a
+                                    class="nav-link active" aria-current="page">ADD RESOURCE</a>
+                            </button>
+                        </li>
+                        <li *ngIf="authService.isLoggedIn()" class="nav-item">
                             <button class="back-button2" routerLink="/Home"><a class="nav-link active"
                                     aria-current="page">DATA BOARD</a>
+                            </button>
+                        </li>
+                        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+                            <button class="back-button2" (click)="authService.logout()">
+                                <a class="nav-link active" aria-current="page">LOGOUT</a>
                             </button>
                         </li>
                     </div>
@@ -49,6 +64,22 @@
         integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
         crossorigin="anonymous"></script>
     <router-outlet></router-outlet>
+
+    <ng-container *ngIf="showLoginModal">
+        <div class="modal-backdrop-custom" (click)="showLoginModal = false"></div>
+        <div class="modal-custom">
+            <app-login (close)="showLoginModal = false"></app-login>
+            <button class="modal-close-btn" (click)="showLoginModal = false">&times;</button>
+        </div>
+    </ng-container>
+
+    <ng-container *ngIf="showSignupModal">
+        <div class="modal-backdrop-custom" (click)="showSignupModal = false"></div>
+        <div class="modal-custom">
+            <app-signup (close)="showSignupModal = false"></app-signup>
+            <button class="modal-close-btn" (click)="showSignupModal = false">&times;</button>
+        </div>
+    </ng-container>
 </body>
 
 </html>

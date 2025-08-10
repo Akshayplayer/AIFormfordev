@@ -12,6 +12,7 @@ import * as XLSX from 'xlsx';                    // ❶ NEW – Excel/CSV parser
 import { formatToYYYYMMDD } from './dateconvert';
 import { observable } from 'rxjs';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { BulkOperationStateService } from '../bulk-operation-state.service';
 
 @Component({
   selector: 'app-add-details',
@@ -26,7 +27,9 @@ export class AddDetailsComponent {
     private myService: ServerService,
     private router: Router,
     private route: ActivatedRoute,
-    private notifier: NotificationUtilService
+    private notifier: NotificationUtilService,
+    private bulkState: BulkOperationStateService,
+    private serverService: ServerService
   ) { }
 
   /* -----------------------------------------------------------
@@ -42,8 +45,15 @@ export class AddDetailsComponent {
   locations: any[] = [];
   projects: any[] = [];
   reportingManagers: any[] = [];
-
-
+  bulkState$ = this.bulkState.state$;
+  
+  bulkImport(data: any[]) {
+    this.bulkState.setState({ inProgress: true, message: 'Importing...' });
+    this.serverService.BulkInsertEmployees(data).subscribe({
+      next: () => this.bulkState.setState({ inProgress: false, success: true, message: 'Import successful!' }),
+      error: () => this.bulkState.setState({ inProgress: false, success: false, message: 'Import failed.' })
+    });
+  }
 
 
   myForm: FormGroup = new FormGroup({
@@ -151,8 +161,8 @@ export class AddDetailsComponent {
               .map(v => v.trim())
               .map(name => getId(name, list))
               .filter(id => id !== null);
-            
-          
+
+
           const obj: Resource = {
             ResourceName: String(normalized['resourcename'] ?? ''),
             EmailId: String(normalized['emailid'] ?? ''),

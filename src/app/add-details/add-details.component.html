@@ -15,6 +15,12 @@
     integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q"
     crossorigin="anonymous"></script>
 
+  <div *ngIf="(bulkState$ | async) as state">
+    <div *ngIf="state.inProgress">Bulk operation in progress...</div>
+    <div *ngIf="state.success === true">{{ state.message }}</div>
+    <div *ngIf="state.success === false">{{ state.message }}</div>
+  </div>
+
   <div class="form">
 
 
@@ -221,6 +227,7 @@
       <!-- <button type="submit" class="btn btn-primary w-100">Submit</button> -->
     </form>
   </div>
-  
+
 </body>
+
 </html>
