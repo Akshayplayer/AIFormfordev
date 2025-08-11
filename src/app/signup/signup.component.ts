@@ -1,5 +1,5 @@
 import { Component, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -12,17 +12,21 @@ import { FormsModule } from '@angular/forms';
   templateUrl: './signup.component.html',
   styleUrl: './signup.component.scss'
 })
+
 export class SignupComponent {
   @Output() close = new EventEmitter<void>();
-  username = '';
-  password = '';
-  email = '';
-  role = '';
+  myForm: FormGroup = new FormGroup({
+    username: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    role: new FormControl('', [Validators.required])
+  });
+  
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onSignup() {
-    this.authService.signup({ username: this.username, password: this.password, email: this.email, role: this.role })
+    this.authService.signup(this.myForm.value)
       .subscribe({
         next: () => {
           alert('Signup successful! Please login.');

@@ -13,7 +13,7 @@ import { CommonModule } from '@angular/common';
 import { ResourceGet } from '../ResourcesGet';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { NgSelectModule } from '@ng-select/ng-select';
-
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-home',
@@ -28,7 +28,8 @@ export class HomeComponent {
     private router: Router,
     route: ActivatedRoute,
     private notifier: NotificationUtilService,
-    private sharedService: ServerService
+    private sharedService: ServerService,
+    public authService: AuthService
   ) { }
 
 
@@ -59,7 +60,7 @@ export class HomeComponent {
     this.getMasters();
 
     this.sharedService.gridRefresh$.subscribe(() => {
-      this.notifier.showMessage("Data imported. Grid refreshed.");
+      // this.notifier.showMessage("Data imported. Grid refreshed.");
       this.getData();
     });
   }
@@ -75,7 +76,7 @@ export class HomeComponent {
     this.Myservices.GetProjects().subscribe(data => this.projects = data);
 
     this.sharedService.gridRefresh$.subscribe(() => {
-      this.notifier.showMessage("Data imported. Grid refreshed.");
+      // this.notifier.showMessage("Data imported. Grid refreshed.");
       this.getData();
     });
   }

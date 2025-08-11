@@ -226,4 +226,16 @@
   }
 }
 
+button:disabled {
+  background: #222 !important;
+  color: #bbb !important;
+  opacity: 0.7;
+  cursor: not-allowed;
+  border: none;
+}
+
+button:disabled a {
+  color: #bbb !important;
+  pointer-events: none;
+}
 

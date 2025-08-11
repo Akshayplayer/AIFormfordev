@@ -25,9 +25,9 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav">
                     <div class="space">
-                        <li class="nav-item" *ngIf="!authService.isLoggedIn()">
-                            <button class="back-button1" (click)="showSignupModal = true">
-                                <a class="nav-link active" aria-current="page">Sign Up</a>
+                        <li class="nav-item" *ngIf="authService.isLoggedIn()">
+                            <button class="back-button1" (click)="showSignupModal = true" [disabled]="authService.getUserRole() !== 'Admin'">
+                                <a class="nav-link active" aria-current="page" >Sign Up</a>
                             </button>
                         </li>
                         <li class="nav-item" *ngIf="!authService.isLoggedIn()">
@@ -41,8 +41,8 @@
                         </li>
 
                         <li class="nav-item">
-                            <button *ngIf="authService.isLoggedIn()" class="back-button2" routerLink="/Add"><a
-                                    class="nav-link active" aria-current="page">ADD RESOURCE</a>
+                            <button *ngIf="authService.isLoggedIn()" class="back-button2" routerLink="/Add" [disabled]="authService.getUserRole() === 'Employee'"><a
+                                    class="nav-link active" aria-current="page" >ADD RESOURCE</a>
                             </button>
                         </li>
                         <li *ngIf="authService.isLoggedIn()" class="nav-item">
@@ -80,6 +80,7 @@
             <button class="modal-close-btn" (click)="showSignupModal = false">&times;</button>
         </div>
     </ng-container>
+
 </body>
 
 </html>

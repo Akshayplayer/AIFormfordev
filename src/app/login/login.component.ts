@@ -1,5 +1,5 @@
 import { Component, NgModule } from '@angular/core';
-import { FormBuilder, Validators, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, Validators, ReactiveFormsModule, FormGroup, FormControl } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
@@ -15,14 +15,17 @@ import { Output, EventEmitter } from '@angular/core';
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  email = '';
-  password = '';
+  myForm:FormGroup= new FormGroup({
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required, Validators.minLength(6)])
+  });
+
   @Output() close = new EventEmitter<void>();
 
   constructor(private authService: AuthService, private router: Router) {}
 
   onLogin() {
-    this.authService.login({ email: this.email, password: this.password })
+    this.authService.login(this.myForm.value)
       .subscribe({
         next: (res: any) => {
           this.authService.saveToken(res.token);

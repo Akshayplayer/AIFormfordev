@@ -1,8 +1,25 @@
 <h2>Sign Up</h2>
-    <form (ngSubmit)="onSignup()">
-      <input type="text" [(ngModel)]="username" name="username" placeholder="Username" required />
-      <input type="email" [(ngModel)]="email" name="email" placeholder="Email" required />
-      <input type="password" [(ngModel)]="password" name="password" placeholder="Password" required />
-      <input type="text" [(ngModel)]="role" name="role" placeholder="Role" required />
-      <button type="submit">Sign Up</button>
-    </form>
+<form [formGroup]="myForm" (ngSubmit)="onSignup()">
+  <input type="text" formControlName="username" placeholder="Username" required />
+  <div class="text-danger small mt-1" *ngIf="myForm.get('username')?.touched && myForm.get('username')?.invalid">
+    <span *ngIf="myForm.get('username')?.errors?.['required']">Name is required.</span>
+  </div>
+  <input type="email" formControlName="email" placeholder="Email" required />
+  <div class="text-danger small mt-1" *ngIf="myForm.get('email')?.touched && myForm.get('email')?.invalid">
+    <span *ngIf="myForm.get('email')?.errors?.['required']">Email is required.</span>
+    <span *ngIf="myForm.get('email')?.errors?.['email']">Invalid email format.</span>
+  </div>
+  <input type="password" formControlName="password" placeholder="Password" required />
+  <div class="text-danger small mt-1" *ngIf="myForm.get('password')?.touched && myForm.get('password')?.invalid">
+    <span *ngIf="myForm.get('password')?.errors?.['required']">Password is required.</span>
+  </div>
+  <!-- create drop down for role -->
+  <select formControlName="role" required>
+    <option value="" disabled>Select Role</option>
+    <option value="Admin">Admin</option>
+    <option value="Manager">Manager</option>
+    <option value="Employee">Employee</option>
+  </select>
+
+  <button type="submit">Sign Up</button>
+</form>

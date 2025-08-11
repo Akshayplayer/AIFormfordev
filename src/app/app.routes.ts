@@ -6,16 +6,16 @@ import { LandingComponent } from './landing/landing.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { SignupComponent } from './signup/signup.component';
 import { LoginComponent } from './login/login.component';
-import { AuthGuard } from './auth-guard.guard';
+import { RoleGuard } from './auth-guard.guard';
 
 export const routes: Routes = [
-    { path: "Home", component: HomeComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-    { path: "Add", component: AddDetailsComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-    { path: "Add/:empId", component: AddDetailsComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-    { path: "Employee/:empId", component: EmployeeDetailComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-    { path: "dashboard", component: DashboardComponent, canActivate: [AuthGuard], pathMatch: 'full' },
-    { path: "", component: LandingComponent, pathMatch: 'full' },
+    { path: "Home", component: HomeComponent, canActivate: [RoleGuard], pathMatch: 'full',data: { role: ['Admin','Manager','Employee'] } },
+    { path: "Add", component: AddDetailsComponent, canActivate: [RoleGuard], pathMatch: 'full',data: { role: ['Admin', 'Manager'] } },
+    { path: "Add/:empId", component: AddDetailsComponent, canActivate: [RoleGuard], pathMatch: 'full',data: { role: ['Admin', 'Manager'] } },
+    { path: "Employee/:empId", component: EmployeeDetailComponent, canActivate: [RoleGuard], pathMatch: 'full',data: { role: ['Admin', 'Manager','Employee'] } },
+    { path: "dashboard", component: DashboardComponent, canActivate: [RoleGuard], pathMatch: 'full',data: { role: ['Admin', 'Manager','Employee'] } },
+    { path: "", component: LandingComponent, pathMatch: 'full',  },
     { path: "landing", component: LandingComponent, pathMatch: 'full' },
     // { path: "", component: SignupComponent, pathMatch: 'full' },
-    // { path: "login", component: LoginComponent, pathMatch: 'full' }
+    // { path: "login", component: LoginComponent, pathMatch: 'full' },
 ];
