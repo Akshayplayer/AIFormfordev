@@ -226,16 +226,131 @@
   }
 }
 
-button:disabled {
-  background: #222 !important;
-  color: #bbb !important;
-  opacity: 0.7;
-  cursor: not-allowed;
-  border: none;
+// Bulk Edit Dialog Styles
+::ng-deep .k-dialog {
+  background: #181c24;
+  color: #f3f4f6;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  padding: 2vw 2vw 2vw 2vw;
+  min-width: 320px;
+  max-width: 95vw;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  position: relative;
 }
 
-button:disabled a {
-  color: #bbb !important;
-  pointer-events: none;
+::ng-deep .k-dialog-titlebar {
+  background: transparent;
+  color: #08d;
+  font-size: 1.2rem;
+  font-weight: 600;
+  border-bottom: 1px solid #23272f;
+  border-radius: 14px 14px 0 0;
+  margin-bottom: 18px;
 }
+
+.bulk-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  max-height: 65vh;
+  overflow-y: auto;
+}
+
+.bulk-edit-form label {
+  color: #b3b8c5;
+  font-size: 1rem;
+  margin-bottom: 0.3rem;
+  font-weight: 500;
+}
+
+.bulk-edit-form .form-control,
+.bulk-edit-form ng-select {
+  background: #23272f;
+  color: #f3f4f6;
+  border: 1px solid #353b48;
+  border-radius: 8px;
+  padding: 0.5rem 0.9rem;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.bulk-edit-form .form-control:focus,
+.bulk-edit-form ng-select:focus-within {
+  border-color: #08d;
+  outline: none;
+}
+
+.bulk-edit-form ng-select .ng-select-container {
+  background: #23272f;
+  color: #f3f4f6;
+  border: none;
+  border-radius: 8px;
+}
+
+.bulk-edit-form ng-select .ng-value {
+  background: #222;
+  color: #08d;
+  border-radius: 6px;
+  margin-right: 4px;
+  padding: 2px 8px;
+}
+
+.bulk-edit-form .mb-2 {
+  margin-bottom: 1.1rem !important;
+}
+
+.k-dialog-actions {
+  margin-top: 1.5rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.k-dialog-actions button[kendoButton] {
+  border-radius: 8px;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  border: none;
+  transition: background 0.2s;
+}
+
+.k-dialog-actions button[kendoButton][primary="true"] {
+  background: #08d;
+  color: #fff;
+}
+
+.k-dialog-actions button[kendoButton]:not([primary="true"]) {
+  background: #23272f;
+  color: #f3f4f6;
+  border: 1px solid #353b48;
+}
+
+.k-dialog-actions button[kendoButton]:hover {
+  filter: brightness(1.1);
+}
+
+@media (max-width: 600px) {
+  ::ng-deep .k-dialog {
+    padding: 4vw 2vw;
+    min-width: unset;
+    max-width: 99vw;
+    max-height: 98vh;
+  }
+  .bulk-edit-form {
+    max-height: 60vh;
+  }
+  .bulk-edit-form label {
+    font-size: 0.98rem;
+  }
+  .k-dialog-actions button[kendoButton] {
+    font-size: 0.95rem;
+    padding: 0.45rem 1rem;
+  }
+}
+
 
