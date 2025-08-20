@@ -30,6 +30,7 @@ export class SignupComponent {
       .subscribe({
         next: () => {
           alert('Signup successful! Please login.');
+          this.close.emit();
           this.router.navigate(['/login']);
         },
         error: (err) => {
