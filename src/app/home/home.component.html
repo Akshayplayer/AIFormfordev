@@ -55,8 +55,8 @@
     <kendo-grid-column title="ACTIONS" [width]="300">
       <ng-template kendoGridCellTemplate let-dataItem>
         <button (click)="View(dataItem.empId)" class="btn btn-sm btn-primary me-2">View</button>
-        <button (click)="Edit(dataItem.empId)" class="btn btn-sm btn-success me-2">Edit</button>
-        <button kendoButton (click)="Delete(dataItem.empId)" class="btn btn-sm btn-danger">Delete</button>
+        <button [disabled]="authService.getUserRole() === 'Employee'" (click)="Edit(dataItem.empId)" class="btn btn-sm btn-success me-2">Edit</button>
+        <button kendoButton [disabled]="authService.getUserRole() === 'Employee'" (click)="Delete(dataItem.empId)" class="btn btn-sm btn-danger">Delete</button>
       </ng-template>
     </kendo-grid-column>
 
